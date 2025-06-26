@@ -1,7 +1,10 @@
 NAME = libftprintf.a
 
-SRCS = ft_printf.c ft_putfuncs.c
+SRCS = ft_printf.c ft_putfuncs.c temp_func.c ft_extra_func.c ft_fill_varpro.c
 OBJS = $(SRCS:.c=.o)
+
+CC = cc
+FLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR = libft
 LIBFT_NAME = $(LIBFT_DIR)/libft.a
@@ -14,6 +17,9 @@ $(NAME): $(LIBFT_NAME) $(OBJS)
 
 $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
+
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	make -C $(LIBFT_DIR) clean
