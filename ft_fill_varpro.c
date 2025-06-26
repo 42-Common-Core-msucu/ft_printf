@@ -13,7 +13,7 @@ int ft_fill_varpro(const char *format, t_varpro *varpro)
 		varpro->type = format[i++];
 	else
 		return (-1);
-	varpro->var_len = i;
+	varpro->var_format_len = i;
 	return (i);
 }
 

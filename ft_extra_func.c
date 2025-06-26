@@ -15,6 +15,10 @@ t_varpro ft_reset_var(t_varpro varpro)
 	varpro.precision = 0;
 	varpro.type = '0';
 	varpro.is_precision = 0;
-	varpro.var_len = 0;
+	varpro.var_format_len = 0;
+	varpro.value_len = 0;
+	varpro.writed = 0;
+	varpro.fill_char = ' ';
+	varpro.sign = -1;
 	return (varpro);
 }

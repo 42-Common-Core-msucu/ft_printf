@@ -6,7 +6,7 @@
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:50:44 by msucu             #+#    #+#             */
-/*   Updated: 2025/06/26 09:53:35 by msucu            ###   ########.fr       */
+/*   Updated: 2025/06/26 18:59:21 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	main(void)
 	char soyisim[] = "SUCU";
 	int	yas = 42;
 	
-	printf("|%019x|\n", 15);
+	// ft_printf("|%5s|\n", "NULL");
+	// printf("%d\n", printf("%s", NULL));
+	printf("%d\n", ft_printf("|%010d|\n", 15));
+	printf("%d\n", printf("|%010d|\n", 15));
 	return (0);
 }

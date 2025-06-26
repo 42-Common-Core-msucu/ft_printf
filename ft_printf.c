@@ -6,7 +6,7 @@
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:04:43 by msucu             #+#    #+#             */
-/*   Updated: 2025/06/26 09:53:46 by msucu            ###   ########.fr       */
+/*   Updated: 2025/06/26 18:48:34 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,37 +73,21 @@ syntax: % flags width precision type
 0 ve . beraber kullanıldığında int için zaten 0 koymaya devam eder, s için kırpma yapılır, c'de yine sadece harf yazılır
 */
 
-void ft_check_sign(va_list args, int c)
+int	ft_args_end_return(va_list args)
 {
-	if (c == 'c')
-		ft_putchar_fd(va_arg(args, int), 1);
-	if (c == 's')
-		ft_putstr_fd(va_arg(args, char *), 1);
-	// if (c == 'p')
-	// 	return (2);
-	if (c == 'd')
-		ft_putnbr_fd(va_arg(args, int), 1);
-	if (c == 'i')
-		ft_putnbr_fd(va_arg(args, int), 1);
-	if (c == 'u')
-		ft_putunbr_fd(va_arg(args, unsigned int), 1);
-	// if (c == 'x')
-	// 	return (6);
-	// if (c == 'X')
-	// 	return (7);
-	if (c == '%')
-		ft_putchar_fd('%', 1);
+	va_end(args);
+	return (-1);
 }
 
-int ft_putvar(va_list args, const char *format, t_varpro *varpro)
+int ft_handvar(va_list args, const char *format, t_varpro *varpro)
 {
-	int	writed;
+	int		writed;
 	
-	writed = 0;
 	if (ft_fill_varpro(format, varpro) == -1)
 		return (-1);
-	format += varpro->var_len;
-	va_arg(args, int);
+	ft_calculate_len(args, varpro);
+	writed = ft_putvar(args, varpro);
+	// format += varpro->var_format_len;
 	return (writed);
 }
 
@@ -121,14 +105,14 @@ int ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			temp = ft_putvar(args, format + 1, &varpro);
+			temp = ft_handvar(args, format + 1, &varpro);
 			if (temp == -1)
 				writed += ft_putchar_return(*format);
 			else
 			{
 				// ft_print_varpro(&varpro);
 				writed += temp;
-				format += varpro.var_len;
+				format += varpro.var_format_len;
 			}
 			varpro = ft_reset_var(varpro);
 		}
