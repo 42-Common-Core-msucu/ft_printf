@@ -14,7 +14,13 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJS)
 	cp $(LIBFT_NAME) $(NAME)
-	ar -rcs $(NAME) $(OBJS)
+	ar -rs $(NAME) $(OBJS)
+
+# $(NAME): $(OBJS)
+# 	ar -rcs $(NAME) $(OBJS)
+
+# bonus: $(OBJS)
+# 	ar -rcs $(NAME) $(OBJS)
 
 $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)

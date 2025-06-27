@@ -9,29 +9,34 @@ void	ft_calculate_len(va_list args, t_varpro *varpro)
 	va_list	args_copy;
 
 	va_copy(args_copy, args);
+	if (varpro->type == '%')
+		varpro->value_len = 1;
 	if (varpro->type == 'c')
 		varpro->value_len = 1;
 	if (varpro->type == 's')
-		varpro->value_len = ft_str_count(va_arg(args_copy, char *));
+		varpro->value_len = ft_str_count(va_arg(args_copy, char *), varpro);
 	if (varpro->type == 'p')
-		varpro->value_len = ft_digit_count_hexa((t_size_t) va_arg(args_copy, void *));
+		varpro->value_len = ft_digit_count_hexa((t_size_t) va_arg(args_copy, void *), varpro) + 2;
 	if (varpro->type == 'd' || varpro->type == 'i')
 		varpro->value_len = ft_digit_count(va_arg(args_copy, int), varpro);
 	if (varpro->type == 'u')
-		varpro->value_len = ft_digit_count_unsigned(va_arg(args_copy, unsigned int));
+		varpro->value_len = ft_digit_count_unsigned(va_arg(args_copy, unsigned int), varpro);
 	if (varpro->type == 'x' || varpro->type == 'X')
-		varpro->value_len = ft_digit_count_hexa(va_arg(args_copy, unsigned int));
+		varpro->value_len = ft_digit_count_hexa(va_arg(args_copy, unsigned int), varpro);
 	if (ft_strchr(varpro->flags, '0') && !ft_strchr(varpro->flags, '-') && varpro->is_precision == 0)
 		varpro->fill_char = '0';
 	va_end(args_copy);
 }
 
-int ft_str_count(char *str)
+int ft_str_count(char *str, t_varpro *varpro)
 {
 	int	i;
 
 	if (str == FT_NULL)
-		return (-1);
+	{
+		varpro->sign = 0;
+		return (6);
+	}
 	i = 0;
 	while (str[i])
 		i++;
@@ -45,12 +50,16 @@ int ft_digit_count(int nbr, t_varpro *varpro)
 
 	count = 0;
 	temp = nbr;
-	if (temp <= 0)
+	if (temp > 0)
 		varpro->sign = 1;
+	if (temp == 0)
+		varpro->sign = 0;
 	if (temp < 0)
-	{
 		temp *= -1;
-		count++;
+	if (varpro->is_precision == 1 && varpro->precision == 0)
+	{
+		if (temp == 0)
+			return (0);
 	}
 	if (temp == 0)
 		return (1);
@@ -62,13 +71,18 @@ int ft_digit_count(int nbr, t_varpro *varpro)
 	return (count);
 }
 
-int ft_digit_count_hexa(t_size_t hexa)
+int ft_digit_count_hexa(t_size_t hexa, t_varpro *varpro)
 {
 	int			count;
 
 	count = 0;
 	if (hexa == 0)
-		return (1);
+	{
+		varpro->sign = 0;
+		if (varpro->is_precision == 0)
+			return (1);
+		return (0);
+	}
 	while (hexa != 0)
 	{
 		hexa /= 16;
@@ -77,13 +91,17 @@ int ft_digit_count_hexa(t_size_t hexa)
 	return (count);
 }
 
-int ft_digit_count_unsigned(unsigned int nbr)
+int ft_digit_count_unsigned(unsigned int nbr, t_varpro *varpro)
 {
 	int			count;
 
 	count = 0;
 	if (nbr == 0)
-		return (1);
+	{
+		if (varpro->is_precision == 0)
+			return (1);
+		return (0);
+	}
 	while (nbr != 0)
 	{
 		nbr /= 10;

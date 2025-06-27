@@ -6,7 +6,7 @@
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 17:50:44 by msucu             #+#    #+#             */
-/*   Updated: 2025/06/26 18:59:21 by msucu            ###   ########.fr       */
+/*   Updated: 2025/06/27 23:51:52 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 #include <stdarg.h>
 #include "libft/libft.h"
 #include "ft_printf.h"
+#include <limits.h>
+#include <unistd.h>
 
-int	main(void)
+int main(void)
 {
-	char isim[] = "Miraç";
-	char soyisim[] = "SUCU";
-	int	yas = 42;
-	
-	// ft_printf("|%5s|\n", "NULL");
-	// printf("%d\n", printf("%s", NULL));
-	printf("%d\n", ft_printf("|%010d|\n", 15));
-	printf("%d\n", printf("|%010d|\n", 15));
+	char *str = NULL;
+	ft_printf("%s\n",str);
+	printf("%s\n",str);
+
 	return (0);
 }

@@ -3,6 +3,11 @@
 		"ft_printf.h": "c",
 		"libft.h": "c",
 		"stdio.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"stdarg.h": "c",
+		"limits.h": "c",
+		"limits": "c",
+		"type_traits": "c",
+		"utility": "c"
 	}
 }
