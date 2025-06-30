@@ -8,6 +8,7 @@
 		"limits.h": "c",
 		"limits": "c",
 		"type_traits": "c",
-		"utility": "c"
+		"utility": "c",
+		"ft_printf_helper.h": "c"
 	}
 }

@@ -1,9 +1,21 @@
-#include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fill_varpro.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 15:43:44 by msucu             #+#    #+#             */
+/*   Updated: 2025/06/30 19:00:50 by msucu            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_helper.h"
 #include "libft/libft.h"
 
-int ft_fill_varpro(const char *format, t_varpro *varpro)
+int	ft_fill_varpro(const char *format, t_varpro *varpro)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	i = ft_find_flags(format, varpro, i);
@@ -21,7 +33,8 @@ int	ft_find_flags(const char *format, t_varpro *varpro, int i)
 {
 	while (ft_strchr("-0# +", format[i]))
 	{
-		varpro->flags[ft_strlen(varpro->flags)] = format[i];
+		if (!ft_is_flag(varpro, format[i]))
+			varpro->flags[ft_strlen(varpro->flags)] = format[i];
 		i++;
 	}
 	return (i);
@@ -38,7 +51,7 @@ int	ft_calculate_width(const char *format, t_varpro *varpro, int i)
 	return (i);
 }
 
-int ft_calculate_precision(const char *format, t_varpro *varpro, int i)
+int	ft_calculate_precision(const char *format, t_varpro *varpro, int i)
 {
 	if (format[i] == '.')
 	{

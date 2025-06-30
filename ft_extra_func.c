@@ -1,14 +1,20 @@
-#include "ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_extra_func.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 18:13:29 by msucu             #+#    #+#             */
+/*   Updated: 2025/06/30 18:46:41 by msucu            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_helper.h"
 #include "libft/libft.h"
 #include <unistd.h>
 
-int ft_putchar_return(int c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-t_varpro ft_reset_var(t_varpro varpro)
+t_varpro	ft_reset_var(t_varpro varpro)
 {
 	ft_memset(varpro.flags, '\0', 6);
 	varpro.width = 0;
@@ -21,4 +27,60 @@ t_varpro ft_reset_var(t_varpro varpro)
 	varpro.fill_char = ' ';
 	varpro.sign = -1;
 	return (varpro);
+}
+
+int	ft_is_flag(t_varpro *varpro, char c)
+{
+	if (ft_strchr(varpro->flags, c))
+		return (1);
+	return (0);
+}
+
+int	ft_putchar_count(char c, int count, t_varpro *varpro, int add_writed)
+{
+	int	i;
+
+	if (count <= 0)
+		return (0);
+	i = 0;
+	while (i < count)
+	{
+		if (write(1, &c, 1) == -1)
+			return (-1);
+		i++;
+	}
+	if (add_writed == 1)
+		varpro->writed += count;
+	if (count != -1)
+		return (count);
+	return (1);
+}
+
+int	ft_putstr_count(char *str, int count, t_varpro *varpro, int add_writed)
+{
+	int	i;
+	int	len;
+
+	if (count <= 0)
+		return (0);
+	len = (int) ft_strlen(str);
+	i = 0;
+	while (i < count)
+	{
+		if (write(1, str, ft_strlen(str)) == -1)
+			return (-1);
+		i++;
+	}
+	if (add_writed == 1)
+		varpro->writed += count * len;
+	if (count * len != -1)
+		return (count * len);
+	return (1);
+}
+
+int	ft_putstr_max(char *str, int max)
+{
+	if (write(1, str, ft_min(max, ft_strlen(str))) == -1)
+		return (-1);
+	return (1);
 }

@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 
-SRCS = ft_printf.c ft_putfuncs.c temp_func.c ft_extra_func.c ft_fill_varpro.c \
-	ft_calculate_len.c ft_putvar.c
+SRCS = ft_printf.c ft_extra_func.c ft_extra_func_2.c ft_fill_varpro.c ft_calculate_len.c \
+	ft_putvar.c ft_putvar_helper.c ft_putvar_helper_2.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
@@ -16,17 +16,13 @@ $(NAME): $(LIBFT_NAME) $(OBJS)
 	cp $(LIBFT_NAME) $(NAME)
 	ar -rs $(NAME) $(OBJS)
 
-# $(NAME): $(OBJS)
-# 	ar -rcs $(NAME) $(OBJS)
-
-# bonus: $(OBJS)
-# 	ar -rcs $(NAME) $(OBJS)
-
 $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -I ./ -c $< -o $@
+
+bonus: re
 
 clean:
 	make -C $(LIBFT_DIR) clean
