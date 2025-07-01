@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_extra_func.c                                    :+:      :+:    :+:   */
+/*   ft_extra_func_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:13:29 by msucu             #+#    #+#             */
-/*   Updated: 2025/06/30 18:46:41 by msucu            ###   ########.fr       */
+/*   Updated: 2025/07/01 15:52:32 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_helper.h"
-#include "libft/libft.h"
+#include "ft_printf_bonus.h"
 #include <unistd.h>
 
 t_varpro	ft_reset_var(t_varpro varpro)

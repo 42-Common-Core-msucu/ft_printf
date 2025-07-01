@@ -5,64 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 15:04:43 by msucu             #+#    #+#             */
-/*   Updated: 2025/06/30 18:45:42 by msucu            ###   ########.fr       */
+/*   Created: 2025/07/01 15:17:57 by msucu             #+#    #+#             */
+/*   Updated: 2025/07/01 15:34:42 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_helper.h"
+#include <unistd.h>
+#include <stdarg.h>
 
-int	ft_handvar(va_list args, const char *format, t_varpro *varpro)
+int	ft_putarg_p(t_size_t nbr)
 {
-	int		writed;
+	int	writed;
+	int	temp;
 
-	if (ft_fill_varpro(format, varpro) == -1)
+	if (nbr == 0)
+	{
+		temp = ft_putstr("(nil)");
+		if (temp == -1)
+			return (-1);
+		return (temp);
+	}
+	writed = 0;
+	temp = ft_putstr("0x");
+	if (temp == -1)
 		return (-1);
-	ft_calculate_len(args, varpro);
-	writed = ft_putvar(args, varpro);
+	writed += temp;
+	temp = ft_putnbr_hexa(nbr, 0);
+	if (temp == -1)
+		return (-1);
+	writed += temp;
 	return (writed);
 }
 
-int	ft_var_check(const char *format, va_list args, t_varpro *varpro, int *w)
+int	ft_putarg(va_list args, char type)
 {
 	int	temp;
-	int	temp2;
-	int	return_val;
 
-	temp = ft_handvar(args, format + 1, varpro);
-	if (temp == -1)
-	{
-		temp2 = ft_putchar_count(*format, 1, varpro, 0);
-		if (temp2 == -1)
-			return (-1);
-		*w += temp2;
-	}
-	else
-	{
-		*w += temp;
-		return_val = varpro->var_format_len;
-	}
-	*varpro = ft_reset_var(*varpro);
-	return (return_val);
+	temp = 1;
+	if (type == '%')
+		temp = ft_putchar('%');
+	if (type == 'c')
+		temp = ft_putchar(va_arg(args, int));
+	if (type == 's')
+		temp = ft_putstr(va_arg(args, char *));
+	if (type == 'p')
+		temp = ft_putarg_p(va_arg(args, t_size_t));
+	if (type == 'd' || type == 'i')
+		temp = ft_putnbr(va_arg(args, int));
+	if (type == 'u')
+		temp = ft_putunbr(va_arg(args, unsigned int));
+	if (type == 'x')
+		temp = ft_putnbr_hexa(va_arg(args, unsigned int), 0);
+	if (type == 'X')
+		temp = ft_putnbr_hexa(va_arg(args, unsigned int), 1);
+	return (temp);
 }
 
-int	ft_format_check(const char **format, va_list args, t_varpro *varpro, int *w)
+int	ft_var_check(va_list args, const char **format, int *writed)
 {
 	int	temp;
 
-	if (**format == '%')
+	if (ft_strchr("cspdiuxX%", *(*format + 1)))
 	{
-		temp = ft_var_check(*format, args, varpro, w);
+		temp = ft_putarg(args, *(*format + 1));
 		if (temp == -1)
 			return (-1);
-		*format += temp;
+		*writed += temp;
+		(*format)++;
 	}
 	else
 	{
-		temp = ft_putchar_count(**format, 1, varpro, 0);
-		if (temp == -1)
+		if (write(1, *format, 1) == -1)
 			return (-1);
-		*w += temp;
+		*writed += 1;
+	}
+	return (1);
+}
+
+int	ft_format_while(va_list args, const char **format, int *writed)
+{
+	if (**format == '%')
+	{
+		if (ft_var_check(args, format, writed) == -1)
+			return (-1);
+	}
+	else
+	{
+		if (write(1, (*format), 1) == -1)
+			return (-1);
+		(*writed) += 1;
 	}
 	(*format)++;
 	return (1);
@@ -70,20 +102,15 @@ int	ft_format_check(const char **format, va_list args, t_varpro *varpro, int *w)
 
 int	ft_printf(const char *format, ...)
 {
-	va_list		args;
-	int			writed;
-	int			temp;
-	t_varpro	varpro;
+	va_list	args;
+	int		writed;
 
-	varpro = ft_reset_var(varpro);
-	va_start(args, format);
+	if (format == FT_NULL)
+		return (-1);
 	writed = 0;
+	va_start(args, format);
 	while (*format)
-	{
-		temp = ft_format_check(&format, args, &varpro, &writed);
-		if (temp == -1)
-			return (-1);
-	}
+		ft_format_while(args, &format, &writed);
 	va_end(args);
 	return (writed);
 }

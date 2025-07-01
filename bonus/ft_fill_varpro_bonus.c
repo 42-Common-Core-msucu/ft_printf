@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fill_varpro.c                                   :+:      :+:    :+:   */
+/*   ft_fill_varpro_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:43:44 by msucu             #+#    #+#             */
-/*   Updated: 2025/06/30 19:00:50 by msucu            ###   ########.fr       */
+/*   Updated: 2025/07/01 15:52:46 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_helper.h"
-#include "libft/libft.h"
+#include "ft_printf_bonus.h"
 
 int	ft_fill_varpro(const char *format, t_varpro *varpro)
 {

@@ -1,8 +1,11 @@
 NAME = libftprintf.a
 
-SRCS = ft_printf.c ft_extra_func.c ft_extra_func_2.c ft_fill_varpro.c ft_calculate_len.c \
-	ft_putvar.c ft_putvar_helper.c ft_putvar_helper_2.c
+SRCS = ft_printf.c ft_put_func.c
 OBJS = $(SRCS:.c=.o)
+
+BONUS_DIR = bonus
+SRCS_BONUS = $(addprefix $(BONUS_DIR)/, ft_printf_bonus.c ft_extra_func_bonus.c	ft_extra_func_2_bonus.c ft_fill_varpro_bonus.c ft_calculate_len_bonus.c ft_putvar_bonus.c ft_putvar_helper_bonus.c ft_putvar_helper_2_bonus.c)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror
@@ -19,14 +22,19 @@ $(NAME): $(LIBFT_NAME) $(OBJS)
 $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
 
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+$(BONUS_DIR)/%.o: $(BONUS_DIR)/%.c
+	$(CC) $(FLAGS) -I libft -c $< -o $@
 
-bonus: re
+%.o: %.c
+	$(CC) $(FLAGS) -I libft -c $< -o $@
+
+bonus: $(LIBFT_NAME) $(OBJS_BONUS)
+	cp $(LIBFT_NAME) $(NAME)
+	ar -rs $(NAME) $(OBJS_BONUS)
 
 clean:
 	make -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
