@@ -20,7 +20,7 @@ $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
 
 %.o: %.c
-	$(CC) $(FLAGS) -I ./ -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 bonus: re
 
