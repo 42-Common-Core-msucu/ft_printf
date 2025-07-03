@@ -17,7 +17,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJS)
 	cp $(LIBFT_NAME) $(NAME)
-	ar -rs $(NAME) $(OBJS)
+	ar -rsc $(NAME) $(OBJS)
 
 $(LIBFT_NAME):
 	make -C $(LIBFT_DIR)
@@ -29,8 +29,9 @@ $(BONUS_DIR)/%.o: $(BONUS_DIR)/%.c
 	$(CC) $(FLAGS) -I libft -c $< -o $@
 
 bonus: $(LIBFT_NAME) $(OBJS_BONUS)
+	rm -f $(NAME)
 	cp $(LIBFT_NAME) $(NAME)
-	ar -rs $(NAME) $(OBJS_BONUS)
+	ar -rsc $(NAME) $(OBJS_BONUS)
 
 clean:
 	make -C $(LIBFT_DIR) clean

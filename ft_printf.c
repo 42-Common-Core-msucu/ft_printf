@@ -6,7 +6,7 @@
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:17:57 by msucu             #+#    #+#             */
-/*   Updated: 2025/07/01 15:34:42 by msucu            ###   ########.fr       */
+/*   Updated: 2025/07/02 19:50:13 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_var_check(va_list args, const char **format, int *writed)
 {
 	int	temp;
 
-	if (ft_strchr("cspdiuxX%", *(*format + 1)))
+	if (*(*format + 1) != '\0' && ft_strchr("cspdiuxX%", *(*format + 1)))
 	{
 		temp = ft_putarg(args, *(*format + 1));
 		if (temp == -1)

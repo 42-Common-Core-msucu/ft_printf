@@ -6,7 +6,7 @@
 /*   By: msucu <msucu@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:04:43 by msucu             #+#    #+#             */
-/*   Updated: 2025/07/01 13:40:23 by msucu            ###   ########.fr       */
+/*   Updated: 2025/07/03 09:49:05 by msucu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_handvar(va_list args, const char *format, t_varpro *varpro)
 {
 	int		writed;
 
+	writed = 0;
 	if (ft_fill_varpro(format, varpro) == -1)
 		return (-1);
 	ft_calculate_len(args, varpro);
@@ -29,6 +30,7 @@ int	ft_var_check(const char *format, va_list args, t_varpro *varpro, int *w)
 	int	temp2;
 	int	return_val;
 
+	return_val = 0;
 	temp = ft_handvar(args, format + 1, varpro);
 	if (temp == -1)
 	{
